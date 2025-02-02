@@ -1,0 +1,18 @@
+
+.sticky-top {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .sticky-top.shadow-sm {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .image-gallery{
+    display: flex;
+    height: 200px;
+    gap: 15px;
+    
+  }
+  

@@ -1,0 +1,19 @@
+INSERT INTO Drivers (FirstName, LastName, Phone, City, VehicleType, Rating)
+VALUES
+('John', 'Doe', '1234567890', 'New York', 'Sedan', 4.7),
+('Jane', 'Smith', '0987654321', 'Los Angeles', 'SUV', 4.3);
+
+INSERT INTO Riders (FirstName, LastName, Phone, City, JoinDate)
+VALUES
+('Alice', 'Johnson', '5556667777', 'New York', '2023-01-15'),
+('Bob', 'Williams', '4445556666', 'Los Angeles', '2023-02-10');
+
+INSERT INTO Rides (RiderID, DriverID, RideDate, PickupLocation, DropLocation, Distance, Fare, RideStatus)
+VALUES
+(1, 1, '2023-03-01 10:00:00', 'Location A', 'Location B', 15.5, 25.00, 'Completed'),
+(2, 2, '2023-03-02 12:00:00', 'Location C', 'Location D', 20.0, 30.00, 'Completed');
+
+INSERT INTO Payments (RideID, PaymentMethod, Amount, PaymentDate)
+VALUES
+(1, 'Card', 25.00, '2023-03-01 10:30:00'),
+(2, 'Wallet', 30.00, '2023-03-02 12:30:00');

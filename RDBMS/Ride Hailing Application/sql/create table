@@ -1,0 +1,41 @@
+CREATE TABLE Drivers (
+    DriverID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Phone VARCHAR(15),
+    City VARCHAR(50),
+    VehicleType VARCHAR(20),
+    Rating DECIMAL(2,1)
+);
+
+CREATE TABLE Riders (
+    RiderID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Phone VARCHAR(15),
+    City VARCHAR(50),
+    JoinDate DATE
+);
+
+CREATE TABLE Rides (
+    RideID INT AUTO_INCREMENT PRIMARY KEY,
+    RiderID INT,
+    DriverID INT,
+    RideDate DATETIME,
+    PickupLocation VARCHAR(255),
+    DropLocation VARCHAR(255),
+    Distance DECIMAL(5,2),
+    Fare DECIMAL(8,2),
+    RideStatus VARCHAR(20),
+    FOREIGN KEY (RiderID) REFERENCES Riders(RiderID),
+    FOREIGN KEY (DriverID) REFERENCES Drivers(DriverID)
+);
+
+CREATE TABLE Payments (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    RideID INT,
+    PaymentMethod VARCHAR(20),
+    Amount DECIMAL(8,2),
+    PaymentDate DATETIME,
+    FOREIGN KEY (RideID) REFERENCES Rides(RideID)
+);

@@ -1,0 +1,48 @@
+CREATE TABLE Restaurants (
+    RestaurantID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100),
+    City VARCHAR(50),
+    CuisineType VARCHAR(50),
+    Rating DECIMAL(2, 1),
+    AverageCostForTwo DECIMAL(10, 2)
+);
+
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Phone VARCHAR(15),
+    City VARCHAR(50),
+    JoinDate DATE
+);
+
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT,
+    RestaurantID INT,
+    OrderDate DATE,
+    OrderAmount DECIMAL(10, 2),
+    OrderStatus VARCHAR(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurants(RestaurantID)
+);
+
+CREATE TABLE Reviews (
+    ReviewID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT,
+    RestaurantID INT,
+    Rating DECIMAL(2, 1),
+    Comment TEXT,
+    ReviewDate DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurants(RestaurantID)
+);
+
+CREATE TABLE Payments (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    PaymentMethod VARCHAR(20),
+    Amount DECIMAL(10, 2),
+    PaymentDate DATE,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);

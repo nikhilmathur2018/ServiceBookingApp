@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Quiz App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #d4edda;
+      font-family: Arial, sans-serif;
+    }
+    .quiz-container {
+      margin: 50px auto;
+      max-width: 600px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="start-screen">
+      <h1>Mini Quiz App</h1>
+      <button id="start-quiz" class="btn btn-primary">Start Quiz</button>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+      <h3 id="question-text"></h3>
+      <div id="options-container" class="mb-4"></div>
+      <button id="next-btn" class="btn btn-success hidden">Next Question</button>
+    </div>
+
+    <div id="result-screen" class="hidden">
+      <h2>Your Score: <span id="score"></span></h2>
+      <button id="reset-quiz" class="btn btn-secondary">Retake Quiz</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // script.js
+
+// Quiz data
+const quizData = [
+  {
+    question: "What is the capital of France?",
+    options: ["Berlin", "Madrid", "Paris", "Rome"],
+    answer: 2, // Index of the correct answer
+  },
+  {
+    question: "What is 5 + 3?",
+    options: ["5", "8", "12", "15"],
+    answer: 1,
+  },
+  {
+    question: "Which programming language is used for web development?",
+    options: ["Python", "Java", "JavaScript", "C++"],
+    answer: 2,
+  },
+];
+
+// DOM Elements
+const startScreen = document.getElementById("start-screen");
+const quizScreen = document.getElementById("quiz-screen");
+const resultScreen = document.getElementById("result-screen");
+const questionText = document.getElementById("question-text");
+const optionsContainer = document.getElementById("options-container");
+const nextBtn = document.getElementById("next-btn");
+const scoreDisplay = document.getElementById("score");
+const resetBtn = document.getElementById("reset-quiz");
+let currentQuestion = 0;
+let score = 0;
+
+// Functions
+function startQuiz() {
+  startScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const question = quizData[currentQuestion];
+  questionText.textContent = question.question;
+  optionsContainer.innerHTML = "";
+
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.classList.add("btn", "btn-outline-primary", "d-block", "mb-2");
+    button.addEventListener("click", () => checkAnswer(index));
+    optionsContainer.appendChild(button);
+  });
+
+  nextBtn.classList.add("hidden");
+}
+
+function checkAnswer(selectedIndex) {
+  const question = quizData[currentQuestion];
+  const buttons = optionsContainer.querySelectorAll("button");
+
+  buttons.forEach((button, index) => {
+    if (index === question.answer) {
+      button.classList.add("btn-success");
+    } else {
+      button.classList.add("btn-danger");
+    }
+    button.disabled = true;
+  });
+
+  if (selectedIndex === question.answer) {
+    score++;
+  }
+
+  nextBtn.classList.remove("hidden");
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < quizData.length) {
+    loadQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.remove("hidden");
+  scoreDisplay.textContent = `${score}/${quizData.length}`;
+}
+
+function resetQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  resultScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden");
+}
+
+// Event Listeners
+document.getElementById("start-quiz").addEventListener("click", startQuiz);
+nextBtn.addEventListener("click", nextQuestion);
+resetBtn.addEventListener("click", resetQuiz);
+
+  </script>
+</body>
+
+</html>
